@@ -3,14 +3,14 @@
 
 def is_year_leap(a):
     if a % 4 == 0 or (a % 100 != 0 and a % 400 == 0):
-        visocos = (print('{} - год высокосный   '.format(a)))
-        return visocos
+        print('{} - год высокосный   '.format(a))
+        return True
     else:
-        novisocos = print('{} - год не высокосный'.format(a))
-        return novisocos 
+        print('{} - год не высокосный'.format(a))
+        return False
 
-def god(n=int(input('Введите начало:')),k=int(input('Введите конец:'))):
-    for count in range(n,k+1):
+def god(n=int(input('Введите начало:')), k=int(input('Введите конец:'))):
+    for count in range(n, k+1):
         is_year_leap(count)
 
 
