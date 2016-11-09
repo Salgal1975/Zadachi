@@ -16,4 +16,4 @@ def is_prime(namber):
 
 
 if __name__ == "__main__":
-    is_prime(int(input("Ввидите число:")))
+    is_prime(int(input("Введите число:")))
