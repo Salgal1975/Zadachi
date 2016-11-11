@@ -144,7 +144,6 @@ if 'main_ball' in globals():
     del main_ball
 balls = create_list_of_balls(NUM_OF_BALLS)
 num_of_bad_balls = count_bad_balls(balls)
-
 main()
 root.mainloop()  # запуск главного окна
 

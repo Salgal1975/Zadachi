@@ -5,13 +5,7 @@ def bank(vklad, years):
     for i in range(years):
         vklad *= 1.1
         print (vklad)
-    return vklad
-
-
-
-
-
-#if __name__ == '__main__':
+    return vkla
 
 
 
