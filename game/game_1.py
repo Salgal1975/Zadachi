@@ -13,7 +13,7 @@ MAIN_BALL_COLOR = 'blue'
 INIT_DX = 1
 INIT_DY = 1
 DELAY = 1
-COLORS = ['aqua', 'fuchsia', 'pink', 'yellow', 'gold']
+COLORS = ['aqua', 'fuchsia', 'pink', 'yellow', 'gold', 'chartreuse']
 
 # balls class
 class Balls():
@@ -32,7 +32,8 @@ class Balls():
                            self.y - self.r,
                            self.x + self.r,
                            self.y + self.r,
-                           fill=self.color)    # цвет заполнения круга
+                           fill=self.color,
+                           outline=self.color)    # цвет заполнения круга
 
 
     # метод прячем круг
@@ -44,6 +45,12 @@ class Balls():
                             fill=BG_COLOR,      # цвет заполнения круга
                             outline=BG_COLOR)   # цвет линии окружности
 
+    # метод проверки сталкновений
+    def is_collision(self, ball):
+            a = abs (self.x + self.dx - ball.x)
+            b = abs (self.y + self.dy - ball.y)
+            return (a * a + b * b) ** 0.5 <= self.r + ball.r
+
 
     # метод движения круга
     def move(self):
@@ -52,6 +59,13 @@ class Balls():
            self.dx = -self.dx
         if (self.y + self.r + self.dy >= HEIGHT) or (self.y - self.r + self.dy <= ZERO):
            self.dy = -self.dy
+        # callding with ball
+        for ball in balls:
+            if self.is_collision(ball):
+                ball.hide()
+                balls.remove(ball)
+                self.dx = -self.dx
+                self.dy = -self.dy
         self.hide()
         self.x += self.dx
         self.y += self.dy
