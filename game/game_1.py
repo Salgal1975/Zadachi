@@ -64,10 +64,13 @@ class Balls():
         # callding with ball
         for ball in balls:
             if self.is_collision(ball):
-                ball.hide()
-                balls.remove(ball)
-                self.dx = -self.dx
-                self.dy = -self.dy
+                if ball.color != BAD_COLOR:
+                    ball.hide()
+                    balls.remove(ball)
+                    self.dx = -self.dx
+                    self.dy = -self.dy
+                else:
+                    self.dx = self.dy = 0
         self.hide()
         self.x += self.dx
         self.y += self.dy
@@ -103,17 +106,32 @@ def create_list_of_balls(number):
         next_ball.draw()
     return lst
 
+# count of bad ball
+def count_bad_balls(list_of_balls):
+    res = 0
+    for ball in list_of_balls:
+        if ball.color == BAD_COLOR:
+            res += 1
+    return res
+
+
 # main cicle game
 def main():
     if 'main_ball' in globals():
         main_ball.move()
-        if len(balls) == 0:
+        if len(balls) - num_of_bad_balls == 0:
             canvas.create_text(WIDTH / 2,
                                HEIGHT / 2,
                                text='Вы выиграли!!',
                                font="Arial 20",
                                fill=MAIN_BALL_COLOR)
             main_ball.dx = main_ball.dy = 0
+        elif main_ball.dx == 0:
+            canvas.create_text (WIDTH / 2,
+                                HEIGHT / 2,
+                                text='Вы проиграли!!',
+                                font="Arial 20",
+                                fill=BAD_COLOR)
     root.after(DELAY, main)
 
 root = tkinter.Tk()  # экземпляр класса tkinter.Tk()-главне окно
@@ -125,6 +143,8 @@ canvas.bind('<Button-3>', mause_click, '*')  # назначаем события
 if 'main_ball' in globals():
     del main_ball
 balls = create_list_of_balls(NUM_OF_BALLS)
+num_of_bad_balls = count_bad_balls(balls)
+
 main()
 root.mainloop()  # запуск главного окна
 
