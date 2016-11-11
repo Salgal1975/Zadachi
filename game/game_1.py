@@ -35,18 +35,29 @@ class Balls():
                             self.y + self.r,
                             fill=BG_COLOR,      # цвет заполнения круга
                             outline=BG_COLOR)   # цвет линии окружности
+    # метод движения круга
+    def move(self):
+        self.draw()
+        self.x += self.dx
+        self.y += self.dy
+        self.hide()
 
 
 # mause events
 def mause_click(event):
-    global main_ball
+    global main_ball # экземпляр класса Balls(), обьявляем глобальной
     if event.num == 1:
-        main_ball = Balls(event.x, event.y, 30, 'blue')
+        main_ball = Balls(event.x, event.y, 30, 'blue', 1, 1) # экземпляр класса Balls()
         main_ball.draw()
     else:
         main_ball.hide()
     #print(event.num, event.x, event.y)
 
+# main cicle game
+def main():
+    if 'main_ball' in globals():
+        main_ball.move()
+    root.after(10, main())
 
 root = tkinter.Tk()  # экземпляр класса tkinter.Tk()-главне окно
 root.title("Coding balls")  # название окна
@@ -55,6 +66,7 @@ canvas.pack()  # создает рабочее поле
 canvas.bind('<Button-1>', mause_click)  # назначаем события кнопкам мыши - ПРАВАЯ
 canvas.bind('<Button-2>', mause_click, '+')  # назначаем события кнопкам мыши - ЛЕВАЯ
 canvas.bind('<Button-3>', mause_click, '*')  # назначаем события кнопкам мыши - СРЕДНЯЯ
+main()
 root.mainloop()  # запуск главного окна
 
 
