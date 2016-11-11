@@ -6,14 +6,17 @@ import random
 # constans
 WIDTH = 640
 HEIGHT = 480
+BLACK_COLOR = 'black'
 BG_COLOR = 'white'
+BAD_COLOR = 'red'
 ZERO = 0
 MAIN_BALL_RADIUS = 30
 MAIN_BALL_COLOR = 'blue'
 INIT_DX = 1
 INIT_DY = 1
 DELAY = 1
-COLORS = ['aqua', 'fuchsia', 'pink', 'yellow', 'gold', 'chartreuse']
+COLORS = [BAD_COLOR, 'aqua', 'fuchsia', 'pink', BAD_COLOR, 'yellow', 'gold', BAD_COLOR, 'chartreuse']
+NUM_OF_BALLS = 5
 
 # balls class
 class Balls():
@@ -33,8 +36,8 @@ class Balls():
                            self.x + self.r,
                            self.y + self.r,
                            fill=self.color,
-                           outline=self.color)    # цвет заполнения круга
-
+                           outline=self.color
+                           if self.color != BAD_COLOR else BLACK_COLOR)    # цвет заполнения круга
 
     # метод прячем круг
     def hide(self):
@@ -50,7 +53,6 @@ class Balls():
             a = abs (self.x + self.dx - ball.x)
             b = abs (self.y + self.dy - ball.y)
             return (a * a + b * b) ** 0.5 <= self.r + ball.r
-
 
     # метод движения круга
     def move(self):
@@ -71,13 +73,12 @@ class Balls():
         self.y += self.dy
         self.draw()
 
-
 # mause events
 def mause_click(event):
     global main_ball # экземпляр класса Balls(), обьявляем глобальной
     if event.num == 1:
         if 'main_ball'not in globals():
-            main_ball = Balls(event.x, event.y, MAIN_BALL_RADIUS, MAIN_BALL_COLOR, INIT_DX, INIT_DY) # экземпляр класса Balls()
+            main_ball = Balls(event.x, event.y, MAIN_BALL_RADIUS, MAIN_BALL_COLOR, INIT_DX, INIT_DY)
             main_ball.draw()
         else:  # turn left
             if main_ball.dx * main_ball.dy > 0:
@@ -89,7 +90,6 @@ def mause_click(event):
             main_ball.dx = -main_ball.dx
         else:
             main_ball.dy = -main_ball.dy
-
 
 # create list of ball
 def create_list_of_balls(number):
@@ -103,11 +103,17 @@ def create_list_of_balls(number):
         next_ball.draw()
     return lst
 
-
 # main cicle game
 def main():
     if 'main_ball' in globals():
         main_ball.move()
+        if len(balls) == 0:
+            canvas.create_text(WIDTH / 2,
+                               HEIGHT / 2,
+                               text='Вы выиграли!!',
+                               font="Arial 20",
+                               fill=MAIN_BALL_COLOR)
+            main_ball.dx = main_ball.dy = 0
     root.after(DELAY, main)
 
 root = tkinter.Tk()  # экземпляр класса tkinter.Tk()-главне окно
@@ -118,7 +124,7 @@ canvas.bind('<Button-1>', mause_click)  # назначаем события кн
 canvas.bind('<Button-3>', mause_click, '*')  # назначаем события кнопкам мыши - ПРАВАЯ
 if 'main_ball' in globals():
     del main_ball
-balls = create_list_of_balls(5)
+balls = create_list_of_balls(NUM_OF_BALLS)
 main()
 root.mainloop()  # запуск главного окна
 
