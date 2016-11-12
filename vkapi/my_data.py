@@ -27,4 +27,4 @@ if __name__ == '__main__':
     #print('end')
 
 #  access_token=79b19648b990b41b6a5ed981753dd5d1bf243d000dae7db000a5d234f437a194f694afb076b966d80a449&expires_in=86400&user_id=281430849&state="kkkk"
-git remote add origin https://github.com/Salgal1975/Zadachi.git
+#git remote add origin https://github.com/Salgal1975/Zadachi.git
