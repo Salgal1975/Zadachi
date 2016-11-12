@@ -8,5 +8,9 @@ response = requests.get(myVkData.API_URL+'users.get',
 result = response.text
 print(result)
 
-#"?q=Вася&access_token=" + token;"
-#','+myVkData.MY_USER_ID
+import json
+response = json.loads(result)
+users = response['response']
+
+[print(user) for user in users]
+
