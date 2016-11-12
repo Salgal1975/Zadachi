@@ -5,8 +5,7 @@ from my_data import myVkData
 
 session = vk.AuthSession(app_id=myVkData.APP_ID,
                          user_login=myVkData.LOGIN,
-                         user_password=myVkData.GET_PASSWORD(),
-                         scope='wall')
+                         user_password=myVkData.GET_PASSWORD())
 vkapi = vk.API(session)
 
 
@@ -19,12 +18,12 @@ SEX = 2  # 1-женский, 2-мужской
 CITY = 1  # Москва
 
 users = vkapi.users.search(interests=','.join(INTERESTS),
-                           #city=CITY,
+                           city=CITY,
                            sex=SEX,
                            age_from=AGE_FROM,
                            age_to=AGE_TO,
                            fields='photo_big,domain')
 
-users = users[:]
+users = users[1:]
 
 [print(user) for user in users]
