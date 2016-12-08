@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 class myVkData:
@@ -16,7 +17,7 @@ class myVkData:
     # пароль в контакте
     @staticmethod
     def GET_PASSWORD():
-        f = open('/Users/GST/Desktop/pass.txt', 'r')
+        f = open('/home/gst/Zadachi_Py/vkapi/txt.txt', 'r')
         passw = f.read().rstrip()
         f.close()
         return passw
